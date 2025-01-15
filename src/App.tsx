@@ -1,8 +1,14 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Login } from "./pages/Login";
+import { Browse } from "./pages/Browse";
 function App() {
   return (
-    <div className="text-3xl font-bold bg-black text-green-300">
-      Welcome to Namaste Netflix-GPT
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/browse" element={<Browse />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
