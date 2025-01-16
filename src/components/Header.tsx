@@ -2,13 +2,13 @@ import { LOGO } from "../utils/constants";
 
 export const Header = () => {
   return (
-    <div className="h-screen">
+    <div className="">
       <img
         src={LOGO}
         alt="Netflix Logo"
         width={300}
         height={300}
-        className="bg-black rounded-lg"
+        className="mx-2 p-4 bg-black/25"
       />
     </div>
   );
