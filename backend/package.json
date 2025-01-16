@@ -1,0 +1,25 @@
+{
+  "name": "netflix-gpt-backend",
+  "version": "1.0.0",
+  "description": "A simple authentication backend for Netflix-GPT",
+  "license": "ISC",
+  "author": "Arghya Chatterjee",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b && node ./dist/index.js"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.2.1",
+    "typescript": "^5.7.3"
+  }
+}
