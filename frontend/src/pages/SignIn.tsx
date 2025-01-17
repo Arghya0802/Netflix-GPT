@@ -7,30 +7,54 @@ import { InputBox } from "../components/InputBox";
 import { BG_URL } from "../utils/constants";
 import { SignInFormSchema } from "../utils/InputZodSchema";
 import { ErrorMssg } from "../components/ErrorMssg";
+import axios from "axios";
+import { BACKEND_URL } from "../utils/config";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 export const SignIn = () => {
+  const dispatch = useDispatch();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [errorMssg, setErrorMssg] = useState("");
+  const navigate = useNavigate();
 
-  function handleFormSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
-    console.log(email, password);
+  async function handleFormSubmit(e: React.FormEvent) {
+    try {
+      e.preventDefault();
+      const email = emailRef.current?.value;
+      const password = passwordRef.current?.value;
+      console.log(email, password);
 
-    if (emailRef && emailRef.current) emailRef.current.value = "";
+      if (emailRef && emailRef.current) emailRef.current.value = "";
 
-    if (passwordRef && passwordRef.current) passwordRef.current.value = "";
+      if (passwordRef && passwordRef.current) passwordRef.current.value = "";
 
-    const { success, error } = SignInFormSchema.safeParse({
-      email,
-      password,
-    });
+      const { success, error } = SignInFormSchema.safeParse({
+        email,
+        password,
+      });
 
-    if (!success) {
-      setErrorMssg(error.issues[0].message);
-      return;
+      if (!success) {
+        setErrorMssg(error.issues[0].message);
+        return;
+      }
+
+      const res = await axios.post(`${BACKEND_URL}/api/v1/user/sign-in`, {
+        email,
+        password,
+      });
+
+      console.log(res);
+      localStorage.setItem("token", res.data.token);
+      dispatch(addUser({ email, password }));
+
+      navigate("/browse");
+    } catch (error: any) {
+      // console.log(error.response.data.message);
+      setErrorMssg(error.response.data.message);
     }
   }
 

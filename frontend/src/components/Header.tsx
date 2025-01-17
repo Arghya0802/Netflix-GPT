@@ -8,7 +8,7 @@ export const Header = () => {
         alt="Netflix Logo"
         width={300}
         height={300}
-        className="mx-2 p-4 bg-black/25"
+        className="mx-2 p-4 bg-black/30"
       />
     </div>
   );
