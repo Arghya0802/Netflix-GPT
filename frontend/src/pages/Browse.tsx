@@ -1,49 +1,40 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../utils/config";
 import { ErrorMssg } from "../components/ErrorMssg";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../utils/userSlice";
+import { Header } from "../components/Header";
+import { removeNowPlayingMovies } from "../utils/movieSlice";
+import { useGetNowPlayingMovies } from "../hooks/useGetNowPlayingMovies";
 
 export const Browse = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
   const [errorMssg, setErrorMssg] = useState("");
+
+  const name = useSelector((state: any) => state.user.name);
+  const email = useSelector((state: any) => state.user.email);
+  console.log(name, email);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (!token) navigate("/sign-in");
+    if (!token) {
+      setErrorMssg("Invalid Session!!!");
+      navigate("/sign-in");
+    }
   }, [navigate]);
 
-  async function getUserDetails() {
-    try {
-      const res = await axios.get(`${BACKEND_URL}/api/v1/user/profile`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-
-      const { name, email } = res.data.user;
-
-      setName(name);
-      setEmail(email);
-    } catch (error: any) {
-      console.log(error);
-      setErrorMssg(error.response.data.message);
-    }
-  }
-
-  useEffect(() => {
-    getUserDetails();
-  }, []);
+  useGetNowPlayingMovies();
 
   return (
     <div className="flex justify-between">
+      <div>
+        <Header />
+      </div>
       <div className="flex flex-col">
         <h1>Name: {name}</h1>
         <h1>Email: {email}</h1>
@@ -55,6 +46,8 @@ export const Browse = () => {
           onClick={() => {
             localStorage.removeItem("token");
             dispatch(removeUser());
+            dispatch(removeNowPlayingMovies());
+
             navigate("/sign-in");
           }}
         />

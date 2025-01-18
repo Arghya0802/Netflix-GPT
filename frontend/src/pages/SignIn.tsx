@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bottomlink } from "../components/BottomLink";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
@@ -21,11 +21,17 @@ export const SignIn = () => {
   const [errorMssg, setErrorMssg] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) navigate("/browse");
+  }, [navigate]);
+
   async function handleFormSubmit(e: React.FormEvent) {
     try {
       e.preventDefault();
-      const email = emailRef.current?.value;
-      const password = passwordRef.current?.value;
+      let email = emailRef.current?.value;
+      let password = passwordRef.current?.value;
       console.log(email, password);
 
       if (emailRef && emailRef.current) emailRef.current.value = "";
@@ -47,9 +53,13 @@ export const SignIn = () => {
         password,
       });
 
-      console.log(res);
+      // console.log(res);
+
       localStorage.setItem("token", res.data.token);
-      dispatch(addUser({ email, password }));
+
+      const newEmail = email === undefined ? null : email;
+
+      dispatch(addUser({ email: newEmail, name: res.data.name }));
 
       navigate("/browse");
     } catch (error: any) {

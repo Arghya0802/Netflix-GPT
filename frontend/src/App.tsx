@@ -4,17 +4,21 @@ import { Browse } from "./pages/Browse";
 import { SignUp } from "./pages/SignUp";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "./utils/appStore";
 
 function App() {
   return (
     <Provider store={appStore}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/browse" element={<Browse />} />
-          <Route path="/sign-up" element={<SignUp />} />
-        </Routes>
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/browse" element={<Browse />} />
+            <Route path="/sign-up" element={<SignUp />} />
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 }

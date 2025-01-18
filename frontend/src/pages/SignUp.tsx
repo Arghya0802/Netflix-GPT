@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bottomlink } from "../components/BottomLink";
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
@@ -57,6 +57,12 @@ export const SignUp = () => {
       setErrorMssg(error.response.data.message);
     }
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) navigate("/browse");
+  }, [navigate]);
 
   return (
     <div

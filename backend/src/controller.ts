@@ -91,6 +91,8 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
 
         res.status(200).json({
             token,
+            name: checkUser.name,
+            email: checkUser.email,
             message: "User signedIn successfully",
             success: true
         })
