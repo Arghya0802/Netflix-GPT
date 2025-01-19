@@ -12,6 +12,9 @@ import { SecondaryContainer } from "../components/SecondaryContainer";
 import { useGetPopularMovies } from "../hooks/useGetPopularMovies";
 import { useGetTopRatedMovies } from "../hooks/useTopRatedMovies";
 import { useGetUpcomingMovies } from "../hooks/useGetUpcomingMovies";
+import { setOriginaGPTState, toggleShowGPT } from "../utils/GptSlice";
+import { GptSearchPage } from "./GptSearch";
+import { language } from "../utils/langConstants";
 
 export const Browse = () => {
   const navigate = useNavigate();
@@ -58,6 +61,8 @@ export const Browse = () => {
     (state: any) => state.movies.upcomingMovies
   );
 
+  const shouldShowGPT = useSelector((state: any) => state.GPT.showGpt);
+  // const shouldShowGPT = false;
   console.log("From Browse");
 
   console.log(movies);
@@ -69,29 +74,44 @@ export const Browse = () => {
   // console.log(movies[0].original_title);
 
   return (
-    <div className="h-screen">
-      <div className="flex items-center h-16 justify-between w-full absolute z-30">
+    <div className="min-h-screen">
+      <div className="flex items-center h-16 justify-between w-full absolute z-30 top-0 pb-2">
         <div>
-          <Header height={200} width={200} />
+          <Header height={200} width={200} isOpaque={!shouldShowGPT} />
         </div>
         {/* <div className="flex flex-col">
           <h1>Name: {name}</h1>
           <h1>Email: {email}</h1>
           {errorMssg && <ErrorMssg mssg={errorMssg} />}
         </div> */}
-        <div className="px-2 ">
+        <div className="px-2 flex gap-2">
+          <div className="">
+            <Button
+              text={language.hindi.gptSearchText}
+              bgColor="bg-purple-800"
+              textColor="text-white"
+              onClick={() => {
+                dispatch(toggleShowGPT());
+              }}
+            />
+          </div>
           <Button
-            text="Sign Out"
+            text={language.hindi.signOutText}
             onClick={() => {
               localStorage.removeItem("token");
               dispatch(removeUser());
               dispatch(removeNowPlayingMovies());
+              dispatch(setOriginaGPTState());
               navigate("/sign-in");
             }}
+            textColor="text-white"
           />
         </div>
       </div>
-      {movies.length > 0 &&
+      {shouldShowGPT ? (
+        <GptSearchPage />
+      ) : (
+        movies.length > 0 &&
         upcomingMovies.length > 0 &&
         popularMovies.length > 0 &&
         topRatedMovies.length > 0 && (
@@ -99,7 +119,12 @@ export const Browse = () => {
             <MainContainer movies={movies} />
             <SecondaryContainer />
           </div>
-        )}
+        )
+      )}
+      {/* <div className="min-w-full">
+        <MainContainer />
+        <SecondaryContainer />
+      </div> */}
     </div>
   );
 };
