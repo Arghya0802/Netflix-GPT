@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface moviesState {
     nowPlayingMovies: string[],
     primaryTrailerId: string
-    popularMovies?: string[]
+    popularMovies: string[]
+    topRatedMovies: string[];
+    upcomingMovies: string[];
 }
 
-const initialState: moviesState = { nowPlayingMovies: [], primaryTrailerId: "", popularMovies: [] };
+const initialState: moviesState = { nowPlayingMovies: [], primaryTrailerId: "", popularMovies: [], topRatedMovies: [], upcomingMovies: [] };
 
 const moviesSlice = createSlice({
     name: "movies",
@@ -23,13 +25,23 @@ const moviesSlice = createSlice({
         addPopularMovies: (state: moviesState, action: PayloadAction<string[]>) => {
             state.popularMovies = action.payload;
         },
+
+        addTopRatedMovies: (state: moviesState, action: PayloadAction<string[]>) => {
+            state.topRatedMovies = action.payload;
+        },
+
+        addUpcomingMovies: (state: moviesState, action: PayloadAction<string[]>) => {
+            state.upcomingMovies = action.payload;
+        },
         removeNowPlayingMovies: (state: moviesState) => {
             state.nowPlayingMovies = [];
             state.primaryTrailerId = "";
             state.popularMovies = [];
+            state.topRatedMovies = []
+            state.upcomingMovies = [];
         }
     }
 })
 
-export const { addNowPlayingMovies, removeNowPlayingMovies, addMainMovieTrailerId } = moviesSlice.actions;
+export const { addNowPlayingMovies, removeNowPlayingMovies, addMainMovieTrailerId, addPopularMovies, addTopRatedMovies, addUpcomingMovies } = moviesSlice.actions;
 export default moviesSlice.reducer;

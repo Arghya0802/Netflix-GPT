@@ -74,7 +74,7 @@ export const SignIn = () => {
       style={{ backgroundImage: `url(${BG_URL})` }}
     >
       <div className="">
-        <Header height={300} width={100} />
+        <Header height={300} width={300} />
       </div>
       <div className="flex  flex-col justify-center w-8/12">
         <div className="bg-black bg-opacity-65 h-4/6 w-4/12 rounded-lg flex flex-col px-2 justify-center">

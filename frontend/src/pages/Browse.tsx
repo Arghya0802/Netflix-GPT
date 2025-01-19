@@ -9,6 +9,9 @@ import { removeNowPlayingMovies } from "../utils/movieSlice";
 import { useGetNowPlayingMovies } from "../hooks/useGetNowPlayingMovies";
 import { MainContainer } from "../components/MainContainer";
 import { SecondaryContainer } from "../components/SecondaryContainer";
+import { useGetPopularMovies } from "../hooks/useGetPopularMovies";
+import { useGetTopRatedMovies } from "../hooks/useTopRatedMovies";
+import { useGetUpcomingMovies } from "../hooks/useGetUpcomingMovies";
 
 export const Browse = () => {
   const navigate = useNavigate();
@@ -33,6 +36,9 @@ export const Browse = () => {
   }, [navigate]);
 
   useGetNowPlayingMovies();
+  useGetPopularMovies();
+  useGetUpcomingMovies();
+  useGetTopRatedMovies();
 
   // useEffect(() => {
   //   () => {
@@ -44,10 +50,20 @@ export const Browse = () => {
   // }, []);
 
   const movies = useSelector((state: any) => state.movies.nowPlayingMovies);
+  const popularMovies = useSelector((state: any) => state.movies.popularMovies);
+  const topRatedMovies = useSelector(
+    (state: any) => state.movies.topRatedMovies
+  );
+  const upcomingMovies = useSelector(
+    (state: any) => state.movies.upcomingMovies
+  );
 
   console.log("From Browse");
 
   console.log(movies);
+  console.log(popularMovies);
+  console.log(topRatedMovies);
+  console.log(upcomingMovies);
 
   // @ts-ignore
   // console.log(movies[0].original_title);
@@ -75,12 +91,15 @@ export const Browse = () => {
           />
         </div>
       </div>
-      {movies.length > 0 && (
-        <div className="bg-gray-300 min-w-full">
-          <MainContainer movies={movies} />
-          <SecondaryContainer />
-        </div>
-      )}
+      {movies.length > 0 &&
+        upcomingMovies.length > 0 &&
+        popularMovies.length > 0 &&
+        topRatedMovies.length > 0 && (
+          <div className="bg-gray-300 min-w-full">
+            <MainContainer movies={movies} />
+            <SecondaryContainer />
+          </div>
+        )}
     </div>
   );
 };
