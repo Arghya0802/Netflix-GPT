@@ -69,7 +69,7 @@ export const SignUp = () => {
       className="h-screen bg-cover bg-center flex justify-between"
       style={{ backgroundImage: `url(${BG_URL})` }}
     >
-      <Header />
+      <Header height={300} width={300} />
       <div className="w-8/12 flex flex-col justify-center">
         <div className="flex flex-col w-4/12 bg-black bg-opacity-65 h-4/6 justify-center rounded-lg px-2">
           <Heading text="Sign Up" textColor="text-white" />
