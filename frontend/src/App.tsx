@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./utils/appStore";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/browse" element={<Browse />} />
             <Route path="/sign-up" element={<SignUp />} />

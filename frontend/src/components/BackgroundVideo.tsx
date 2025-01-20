@@ -4,7 +4,7 @@ export const BackgroundVideo = () => {
   const id = useSelector((state: any) => state.movies.primaryTrailerId);
 
   return (
-    <div className="w-full top-0 -mt-14">
+    <div className="hidden md:block w-full top-0 -mt-14">
       <iframe
         className="w-full aspect-video overflow-x-clip"
         src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&modestbranding=1&rel=0&controls=1loop=1`}

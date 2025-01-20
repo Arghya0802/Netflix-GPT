@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_KEY_TOKEN } from "../utils/config";
 import { addMainMovieTrailerId } from "../utils/movieSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 interface movieProps {
@@ -23,6 +23,7 @@ interface movieProps {
 
 export const useGetMovieTrailer = ({ mainMovie }: { mainMovie: movieProps }) => {
     const dispatch = useDispatch();
+    const primaryMovieId = useSelector((state: any) => state.movies.primaryTrailerId);
 
     async function getMovieTrailers() {
         try {
@@ -55,6 +56,6 @@ export const useGetMovieTrailer = ({ mainMovie }: { mainMovie: movieProps }) => 
     }
 
     useEffect(() => {
-        getMovieTrailers();
+        !primaryMovieId && getMovieTrailers();
     }, []);
 }

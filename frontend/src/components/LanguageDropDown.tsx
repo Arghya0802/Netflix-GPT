@@ -27,7 +27,7 @@ export const LanguageDropDown = ({
   return (
     <div>
       <select
-        className=" focus:outline-none p-2 rounded-lg bg-gray-200"
+        className=" focus:outline-none p-2 rounded-lg bg-gray-600 text-white"
         onChange={onChange}
       >
         {SUPPORTED_LANGUAGES.map((language) => {
@@ -36,6 +36,7 @@ export const LanguageDropDown = ({
               key={language.identifer}
               value={language.identifer}
               ref={reference}
+              className=""
               //   onChange={onChange}
             >
               {language.name}

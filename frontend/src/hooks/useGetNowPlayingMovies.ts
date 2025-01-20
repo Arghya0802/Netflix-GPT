@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_KEY_TOKEN } from "../utils/config";
 import { addNowPlayingMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
 
 export function useGetNowPlayingMovies() {
     const dispatch = useDispatch();
+    const nowPlayingMovies = useSelector((state: any) => state.movies.nowPlayingMovies);
 
     useEffect(() => {
         async function fetchData() {
@@ -28,7 +29,7 @@ export function useGetNowPlayingMovies() {
             }
         }
 
-        fetchData();
+        nowPlayingMovies.length === 0 && fetchData();
     }, [])
 }
 

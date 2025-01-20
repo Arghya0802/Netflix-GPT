@@ -16,8 +16,8 @@ export const SecondaryContainer = () => {
     (state: any) => state.movies.upcomingMovies
   );
   return (
-    <div className="flex flex-col scrollbar-hide bg-black">
-      <div className="-mt-52">
+    <div className="flex flex-col scrollbar-hide bg-black min-h-screen">
+      <div className="md:-mt-52 mt-20 min-h-full mb-80 md:mb-4">
         <MovieList title="Now Playing Movies" movies={nowPlayingMovies} />
         <MovieList title="Popular" movies={popularMovies} />
         <MovieList title="Top Rated" movies={topRatedMovies} />

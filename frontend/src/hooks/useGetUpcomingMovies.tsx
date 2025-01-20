@@ -1,11 +1,14 @@
 import axios from "axios";
 import { API_KEY_TOKEN } from "../utils/config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUpcomingMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
 
 export function useGetUpcomingMovies() {
   const dispatch = useDispatch();
+  const upcomingMovies = useSelector(
+    (state: any) => state.movies.upcomingMovies
+  );
 
   async function getUpcomingMovies() {
     try {
@@ -26,6 +29,6 @@ export function useGetUpcomingMovies() {
   }
 
   useEffect(() => {
-    getUpcomingMovies();
+    upcomingMovies.length === 0 && getUpcomingMovies();
   }, []);
 }

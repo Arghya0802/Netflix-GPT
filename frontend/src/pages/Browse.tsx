@@ -88,16 +88,16 @@ export const Browse = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="flex items-center h-16 justify-between w-full absolute z-30 top-0 pb-2">
-        <div>
-          <Header height={200} width={200} isOpaque={!shouldShowGPT} />
+      <div className="flex items-center md:h-16 md:justify-between w-full absolute z-30 top-0 pb-2 md:py-2">
+        <div className="-mt-2 md:mt-0">
+          <Header height={400} width={400} isOpaque={!shouldShowGPT} />
         </div>
         {/* <div className="flex flex-col">
           <h1>Name: {name}</h1>
           <h1>Email: {email}</h1>
           {errorMssg && <ErrorMssg mssg={errorMssg} />}
         </div> */}
-        <div className="px-2 flex gap-4 items-center">
+        <div className="md:px-2 flex md:gap-4 items-center gap-2 justify-center w-full md:w-fit">
           <LanguageDropDown
             onChange={(e) => {
               // console.log("I am inside drop down");
@@ -125,6 +125,7 @@ export const Browse = () => {
               onClick={() => {
                 dispatch(toggleShowGPT());
               }}
+              width={showGpt ? "" : "w-fit"}
             />
           </div>
           <Button

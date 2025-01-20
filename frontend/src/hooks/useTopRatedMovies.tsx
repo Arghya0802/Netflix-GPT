@@ -1,11 +1,14 @@
 import axios from "axios";
 import { API_KEY_TOKEN } from "../utils/config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
 
 export function useGetTopRatedMovies() {
   const dispatch = useDispatch();
+  const topRatedMovies = useSelector(
+    (state: any) => state.movies.topRatedMovies
+  );
 
   async function getTopRatedMovies() {
     try {
@@ -25,6 +28,6 @@ export function useGetTopRatedMovies() {
   }
 
   useEffect(() => {
-    getTopRatedMovies();
+    topRatedMovies.length === 0 && getTopRatedMovies();
   }, []);
 }
