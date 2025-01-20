@@ -5,3 +5,14 @@ export const BG_URL =
 
 export const AVATAR_URL =
   "https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6e";
+
+interface lanuageProps {
+  identifer: string;
+  name: string;
+}
+
+export const SUPPORTED_LANGUAGES: lanuageProps[] = [
+  { identifer: "english", name: "English" },
+  { identifer: "hindi", name: "Hindi" },
+  { identifer: "spanish", name: "Spanish" },
+];

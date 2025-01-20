@@ -26,7 +26,7 @@ export const MovieList = ({
 }) => {
   return (
     <div className="flex flex-col min-w-full px-3 ">
-      <div className="text-3xl text-white p-3 font-bold">{title}</div>
+      <div className="text-3xl text-white p-3 font-bold ">{title}</div>
       <div className="flex gap-2 px-3 overflow-auto scrollbar-hide">
         {movies.map((movie) => (
           <MovieCard

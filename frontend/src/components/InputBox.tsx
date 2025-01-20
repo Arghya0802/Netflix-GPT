@@ -4,6 +4,7 @@ interface InputBoxProps {
   type?: string;
   bgColor?: string;
   reference?: React.Ref<HTMLInputElement>;
+  textColor?: string;
 }
 
 export const InputBox = ({
@@ -12,6 +13,7 @@ export const InputBox = ({
   type = "text",
   bgColor,
   reference,
+  textColor,
 }: InputBoxProps) => {
   return (
     <div>

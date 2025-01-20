@@ -8,7 +8,7 @@ export const MovieCard = ({
   title: string;
 }) => {
   return (
-    <div className="flex w-48 h-auto flex-shrink-0">
+    <div className="flex w-48 h-auto flex-shrink-0 cursor-pointer">
       <img src={`${IMG_CDN_URL}/${posterPath}`} alt={title} />
     </div>
   );

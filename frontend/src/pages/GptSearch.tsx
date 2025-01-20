@@ -1,3 +1,4 @@
+import { GptRecommendedMovies } from "../components/GptRecommendedMovies";
 import { GptSearchBar } from "../components/GptSearchBar";
 import { BG_URL } from "../utils/constants";
 
@@ -9,6 +10,7 @@ export const GptSearchPage = () => {
     >
       <div className="w-1/2">
         <GptSearchBar />
+        <GptRecommendedMovies />
       </div>
     </div>
   );

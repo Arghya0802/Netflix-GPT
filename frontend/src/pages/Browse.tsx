@@ -12,17 +12,30 @@ import { SecondaryContainer } from "../components/SecondaryContainer";
 import { useGetPopularMovies } from "../hooks/useGetPopularMovies";
 import { useGetTopRatedMovies } from "../hooks/useTopRatedMovies";
 import { useGetUpcomingMovies } from "../hooks/useGetUpcomingMovies";
-import { setOriginaGPTState, toggleShowGPT } from "../utils/GptSlice";
+import {
+  changeUserLanguage,
+  resetGptRecommendedMovies,
+  setOriginaGPTState,
+  toggleShowGPT,
+} from "../utils/GptSlice";
 import { GptSearchPage } from "./GptSearch";
 import { language } from "../utils/langConstants";
+import { LanguageDropDown } from "../components/LanguageDropDown";
 
 export const Browse = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const [userLanguage, setUserLanguage] = useState<languageProps>("english") ;
+  const userLanguage = useSelector((state: any) => state.GPT.userLanguage);
+  const showGpt = useSelector((state: any) => state.GPT.showGpt);
+  console.log(userLanguage);
+
   // const [name, setName] = useState("");
   // const [email, setEmail] = useState("");
   const [errorMssg, setErrorMssg] = useState("");
   // const [movies, setMovies] = useState([]);
+
+  if (!showGpt) dispatch(resetGptRecommendedMovies());
 
   const name = useSelector((state: any) => state.user.name);
   const email = useSelector((state: any) => state.user.email);
@@ -84,10 +97,29 @@ export const Browse = () => {
           <h1>Email: {email}</h1>
           {errorMssg && <ErrorMssg mssg={errorMssg} />}
         </div> */}
-        <div className="px-2 flex gap-2">
+        <div className="px-2 flex gap-4 items-center">
+          <LanguageDropDown
+            onChange={(e) => {
+              // console.log("I am inside drop down");
+
+              dispatch(changeUserLanguage(e.target.value));
+            }}
+          />
           <div className="">
             <Button
-              text={language.hindi.gptSearchText}
+              text={
+                !showGpt && userLanguage === "english"
+                  ? language.english.gptSearchText
+                  : !showGpt && userLanguage === "hindi"
+                  ? language.hindi.gptSearchText
+                  : !showGpt && userLanguage === "spanish"
+                  ? language.spanish.gptSearchText
+                  : userLanguage === "english"
+                  ? language.english.homePage
+                  : userLanguage === "hindi"
+                  ? language.hindi.homePage
+                  : language.spanish.homePage
+              }
               bgColor="bg-purple-800"
               textColor="text-white"
               onClick={() => {
@@ -96,7 +128,13 @@ export const Browse = () => {
             />
           </div>
           <Button
-            text={language.hindi.signOutText}
+            text={
+              userLanguage === "english"
+                ? language.english.signOutText
+                : userLanguage === "hindi"
+                ? language.hindi.signOutText
+                : language.spanish.signOutText
+            }
             onClick={() => {
               localStorage.removeItem("token");
               dispatch(removeUser());

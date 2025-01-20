@@ -4,7 +4,9 @@ import { SignInFormSchema, SignUpFormSchema } from "./UserZodSchema";
 import prisma from "./lib/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
-import { JWT_SECRET } from "./config";
+import { API_KEY_TOKEN, JWT_SECRET, openAI } from "./config";
+import { z } from "zod";
+import axios from "axios";
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -118,6 +120,113 @@ export const getUserProfile = async (req: Request, res: Response, next: NextFunc
             message: "User details fetched successfully",
             success: true
         })
+    } catch (error) {
+        console.log(error);
+        next(new ApiError());
+        return;
+    }
+}
+
+export const getRecommendedMovies = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const zodObj = z.object({
+            searchText: z.string().min(5, { message: "Too short text" }).max(50, { message: "Too long text" })
+        })
+
+        const { success, error } = zodObj.safeParse(req.body);
+
+        if (!success) {
+            next(new ApiError(411, error.issues[0].message))
+            return;
+        }
+
+        const id = req.userId;
+        const loggedInUser = await prisma.user.findUnique({ where: { id }, select: { email: true, name: true } });
+
+        if (!loggedInUser) {
+            next(new ApiError(404, "No User found"));
+            return;
+        }
+
+        const gptQuery = "Act as a movie recommendation system and suggest some movies for the query " + req.body.searchText + "only give me top 10 names that are comma seperated like the example ahead. Example: Don, Sholay, Phir Hera Feri, Kahani, Aajkal...";
+
+        const results = await openAI.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: gptQuery }]
+        })
+
+        const data = results.choices[0].message.content;
+        const movies = data?.split(",")
+
+        const newMovies = movies?.map((movie) => {
+            movie.trim();
+            const words = movie.split(" ");
+            console.log(words);
+
+            let query = "";
+
+            words.map((word: string, index: number) => {
+                if (word.length > 0) query += word;
+                if (word.length > 0 && index != words.length - 1) query += "%20";
+            })
+
+            return query;
+        });
+
+        res.status(200).json({
+            recommendedMovies: newMovies,
+            message: "Recommended movies fetched successfully",
+            success: true
+        })
+        return;
+    } catch (error) {
+        console.log(error);
+        next(new ApiError())
+    }
+}
+
+export const getSingleMovie = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const zodObj = z.object({
+            movieName: z.string()
+        })
+
+
+        const { success, error } = zodObj.safeParse(req.body);
+
+        if (!success) {
+            next(new ApiError(411, error.issues[0].message))
+            return;
+        }
+
+        const { movieName } = req.body;
+        const words = movieName.split(" ");
+        let finalQuery = "";
+
+        words.map((word: string, index: number) => {
+            finalQuery += word;
+
+            if (index < word.length - 1) finalQuery += "%20";
+        })
+
+        // console.log(finalQuery);
+        const movieDetails = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${finalQuery}`, {
+            headers: {
+                Authorization: API_KEY_TOKEN
+            }
+        })
+
+        if (!movieDetails) {
+            next(new ApiError(403, "TMDB API not working on JIO"));
+            return;
+        }
+
+        res.status(200).json({
+            movieDetails,
+            message: "Movie details fetched successfully!",
+            success: true
+        })
+        return
     } catch (error) {
         console.log(error);
         next(new ApiError());

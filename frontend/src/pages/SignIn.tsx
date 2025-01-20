@@ -73,7 +73,7 @@ export const SignIn = () => {
       className="h-screen bg-cover bg-center w-full flex justify-between"
       style={{ backgroundImage: `url(${BG_URL})` }}
     >
-      <div className="">
+      <div className="flex">
         <Header height={300} width={300} isOpaque={false} />
       </div>
       <div className="flex  flex-col justify-center w-8/12">
