@@ -14,7 +14,7 @@ app.listen(3000, () => {
 })
 
 
-import userRouter from "./user.routes"
+import userRouter from "./routes"
 app.use("/api/v1/user", userRouter);
 
 app.use(notFoundMiddleware);

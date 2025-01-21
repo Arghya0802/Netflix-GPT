@@ -7,7 +7,7 @@ export const BackgroundVideo = () => {
     <div className="hidden md:block w-full top-0 -mt-14">
       <iframe
         className="w-full aspect-video overflow-x-clip"
-        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&modestbranding=1&rel=0&controls=1loop=1`}
+        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&modestbranding=1&rel=0&controls=1&loop=1`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       ></iframe>

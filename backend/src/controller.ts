@@ -233,3 +233,89 @@ export const getSingleMovie = async (req: Request, res: Response, next: NextFunc
         return;
     }
 }
+
+interface movieProps {
+    id: number,
+    poster_path: string;
+    original_title: string;
+    category: string;
+    name: string;
+}
+export const addMovies = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { movies, category }: { movies: movieProps[], category: string } = req.body
+
+        const promisifiedArray = movies.map(async (movie) => {
+
+            const alreadyAddedMovie = await prisma.movie.findUnique({ where: { id: movie.id } });
+
+            if (alreadyAddedMovie) {
+                alreadyAddedMovie.category.push(category);
+
+                const updatedMovie = await prisma.movie.update({ where: { id: movie.id }, data: { category: alreadyAddedMovie.category } });
+                return updatedMovie;
+            } else {
+                const res = await prisma.movie.create({
+                    data: {
+                        id: movie.id,
+                        title: movie.original_title,
+                        category: [category],
+                        posterPath: `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    }
+                })
+            }
+        })
+
+        const addedMovies = await Promise.all(promisifiedArray);
+
+        res.status(200).json({
+            addedMovies,
+            message: "Given movies added successfully!",
+            success: true
+        })
+    } catch (error) {
+        console.log(error);
+        next(new ApiError());
+        return;
+    }
+}
+
+export const getCollectionOfMovies = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { categoryName } = req.query as any;
+
+        const userId = req.userId;
+
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+
+        if (!user) {
+            next(new ApiError(404, "No User found"))
+            return;
+        }
+        // console.log(categoryName);
+
+        let filteredMovies = [] as any[];
+
+        const allMovies = await prisma.movie.findMany();
+
+        // console.log(allMovies);
+
+        allMovies.map((movie) => {
+            movie.category.map((category) => {
+                if (category.toLowerCase().includes(categoryName.toLowerCase()))
+                    filteredMovies.push(movie);
+            })
+        })
+
+        res.status(200).json({
+            noOfMovies: filteredMovies.length,
+            filteredMovies,
+            message: "Movies filtered successfully!",
+            sucess: true
+        })
+    } catch (error) {
+        console.log(error);
+        next(new ApiError());
+        return;
+    }
+}

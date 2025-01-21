@@ -1,7 +1,18 @@
 import { useSelector } from "react-redux";
 import { MovieList } from "./MovieList";
+import { useState } from "react";
+import { IndivdualMovieCard } from "./IndividualMovieCard";
+import { IMG_CDN_URL } from "../utils/config";
 
+interface movieProps {
+  title: string;
+  posterPath: string;
+}
 export const SecondaryContainer = () => {
+  const [selectedMovie, setSelectedMovie] = useState<any>(null);
+
+  console.log(selectedMovie);
+
   const nowPlayingMovies = useSelector(
     (state: any) => state.movies.nowPlayingMovies
   );
@@ -17,11 +28,34 @@ export const SecondaryContainer = () => {
   );
   return (
     <div className="flex flex-col scrollbar-hide bg-black min-h-screen">
+      {selectedMovie && (
+        <IndivdualMovieCard
+          title={selectedMovie.title}
+          posterPath={`${selectedMovie.posterPath}`}
+          onClick={() => setSelectedMovie(null)}
+        />
+      )}
       <div className="md:-mt-52 mt-20 min-h-full mb-80 md:mb-4">
-        <MovieList title="Now Playing Movies" movies={nowPlayingMovies} />
-        <MovieList title="Popular" movies={popularMovies} />
-        <MovieList title="Top Rated" movies={topRatedMovies} />
-        <MovieList title="Upcoming Movies" movies={upcomingMovies} />
+        <MovieList
+          title="Now Playing Movies"
+          movies={nowPlayingMovies}
+          movieClick={(movie) => setSelectedMovie(movie)}
+        />
+        <MovieList
+          title="Popular"
+          movies={popularMovies}
+          movieClick={(movie) => setSelectedMovie(movie)}
+        />
+        <MovieList
+          title="Top Rated"
+          movies={topRatedMovies}
+          movieClick={(movie) => setSelectedMovie(movie)}
+        />
+        <MovieList
+          title="Upcoming Movies"
+          movies={upcomingMovies}
+          movieClick={(movie) => setSelectedMovie(movie)}
+        />
       </div>
     </div>
   );

@@ -10,9 +10,11 @@ import { ErrorMssg } from "../components/ErrorMssg";
 import axios from "axios";
 import { BACKEND_URL } from "../utils/config";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../components/Loader";
 
 export const SignUp = () => {
   const [errorMssg, setErrorMssg] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const emailRef = useRef<HTMLInputElement>(null);
@@ -23,6 +25,7 @@ export const SignUp = () => {
     try {
       e.preventDefault();
 
+      setIsLoading(true);
       const email = emailRef.current?.value;
       const password = passwordRef.current?.value;
       const name = nameRef.current?.value;
@@ -53,8 +56,10 @@ export const SignUp = () => {
 
       navigate("/sign-in");
     } catch (error: any) {
-      // console.log(error.response.data.message);
+      setIsLoading(false);
       setErrorMssg(error.response.data.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -70,8 +75,8 @@ export const SignUp = () => {
       style={{ backgroundImage: `url(${BG_URL})` }}
     >
       <Header height={300} width={300} />
-      <div className="w-8/12 flex flex-col justify-center">
-        <div className="flex flex-col w-4/12 bg-black bg-opacity-65 h-4/6 justify-center rounded-lg px-2">
+      <div className="flex  flex-col items-center justify-between md:w-8/12 w-full md:items-start md:justify-center ">
+        <div className="bg-black bg-opacity-65 md:h-4/6 h-1/2 md:w-4/12 w-full rounded-lg flex flex-col px-2 justify-center mr-28 mt-28 md:-mr-10 md:-mt-20">
           <Heading text="Sign Up" textColor="text-white" />
           <form onSubmit={handleFormSubmit}>
             <InputBox
@@ -90,7 +95,13 @@ export const SignUp = () => {
               bgColor="bg-gray-500"
               reference={passwordRef}
             />
-            <Button text="Sign Up" type="submit" />
+            {loading ? (
+              <div className=" flex justify-center items-center py-4">
+                <Loader />
+              </div>
+            ) : (
+              <Button text="Sign Up" type="submit" textColor="text-white" />
+            )}
           </form>
 
           {errorMssg && <ErrorMssg mssg={errorMssg} />}

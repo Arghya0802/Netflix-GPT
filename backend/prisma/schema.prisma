@@ -19,3 +19,10 @@ model User {
   password String
   name     String
 }
+
+model Movie {
+  id         Int      @id
+  posterPath String
+  title      String
+  category   String[]
+}

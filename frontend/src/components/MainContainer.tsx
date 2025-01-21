@@ -29,8 +29,8 @@ export const MainContainer = ({ movies }: { movies: movieProps[] }) => {
   useGetMovieTrailer({ mainMovie });
 
   return (
-    <div className=" bg-red-300 md:pt-0">
-      <div className="bg-green-500">
+    <div className="md:pt-0">
+      <div className="">
         <BackgroundVideo />
       </div>
 
@@ -43,8 +43,10 @@ export const MainContainer = ({ movies }: { movies: movieProps[] }) => {
       /> */}
       <div className="">
         <VideoTitle
-          title={mainMovie.original_title}
-          overview={mainMovie.overview}
+          title={"Mufasa: The Lion King"}
+          overview={
+            "Mufasa, a cub lost and alone, meets a sympathetic lion named Taka, the heir to a royal bloodline. The chance meeting sets in motion an expansive journey of a group of misfits searching for their destiny."
+          }
         />
       </div>
     </div>

@@ -51,7 +51,7 @@ export const useGetMovieTrailer = ({ mainMovie }: { mainMovie: movieProps }) => 
             console.log(`https://www.youtube.com/watch?v=${trailer.key}`);
         } catch (error) {
             console.log(error);
-            // dispatch(addMainMovieTrailerId("hR1-ihzff3I"))
+            dispatch(addMainMovieTrailerId("lMXh6vjiZrI"));
         }
     }
 

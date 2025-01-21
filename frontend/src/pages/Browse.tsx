@@ -87,7 +87,7 @@ export const Browse = () => {
   // console.log(movies[0].original_title);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full">
       <div className="flex items-center md:h-16 md:justify-between w-full absolute z-30 top-0 pb-2 md:py-2">
         <div className="-mt-2 md:mt-0">
           <Header height={400} width={400} isOpaque={!shouldShowGPT} />

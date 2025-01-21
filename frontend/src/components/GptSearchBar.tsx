@@ -2,22 +2,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { language } from "../utils/langConstants";
 import { Button } from "./Button";
 import { InputBox } from "./InputBox";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { API_KEY_TOKEN, BACKEND_URL } from "../utils/config";
 import { ErrorMssg } from "./ErrorMssg";
 import { addGptRecommendedMovies } from "../utils/GptSlice";
+import { Loader } from "./Loader";
 
 export const GptSearchBar = () => {
   const userLanguage = useSelector((state: any) => state.GPT.userLanguage);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleFormSubmit(e: React.FormEvent) {
     try {
       e.preventDefault();
       // gpt-3.5-turbo
 
+      setIsLoading(true);
       if (inputRef && inputRef.current) {
         const res = await axios.post(
           `${BACKEND_URL}/api/v1/user/get-movies`,
@@ -64,6 +67,9 @@ export const GptSearchBar = () => {
     } catch (error: any) {
       console.log(error);
       <ErrorMssg mssg={error.response.data.message} />;
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -79,18 +85,24 @@ export const GptSearchBar = () => {
         bgColor="bg-gray-600"
         reference={inputRef}
       />
-      <Button
-        text={
-          userLanguage === "english"
-            ? language.english.search
-            : userLanguage === "hindi"
-            ? language.hindi.search
-            : language.spanish.search
-        }
-        bgColor="bg-red-500"
-        textColor="text-white"
-        type="submit"
-      />
+      {isLoading ? (
+        <div className=" flex justify-center items-center pt-4">
+          <Loader />
+        </div>
+      ) : (
+        <Button
+          text={
+            userLanguage === "english"
+              ? language.english.search
+              : userLanguage === "hindi"
+              ? language.hindi.search
+              : language.spanish.search
+          }
+          bgColor="bg-red-500"
+          textColor="text-white"
+          type="submit"
+        />
+      )}
     </form>
   );
 };

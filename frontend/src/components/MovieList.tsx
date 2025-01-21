@@ -1,38 +1,40 @@
+import { useSelector } from "react-redux";
 import { MovieCard } from "./MovieCard";
 
 interface movieProps {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
   id: number;
   original_language: string;
-  original_title: string;
+  title: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  posterPath: string;
   release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+  poster_path: string;
 }
 
 export const MovieList = ({
   title,
   movies,
+  movieClick,
 }: {
   title: string;
   movies: movieProps[];
+  movieClick?: (movie: movieProps) => void;
 }) => {
+  const showGpt = useSelector((state: any) => state.GPT.showGpt);
+
   return (
-    <div className="flex flex-col min-w-full px-3 h-full mt-10">
-      <div className="text-3xl text-white p-3 font-bold ">{title}</div>
-      <div className="flex gap-2 px-3 overflow-auto scrollbar-hide">
+    <div className="flex flex-col w-full px-3 h-full mt-10">
+      <div className="text-3xl text-white p-3 font-bold ">
+        {title ? title : ""}
+      </div>
+      <div className="flex gap-2 px-3 overflow-x-auto scrollbar-hide w-full">
         {movies.map((movie) => (
           <MovieCard
-            posterPath={movie.poster_path}
-            title={movie.title}
-            key={movie.id}
+            posterPath={showGpt ? movie?.poster_path : movie?.posterPath}
+            title={movie?.title}
+            key={movie?.id}
+            onClick={() => movieClick && movieClick(movie)}
           />
         ))}
       </div>

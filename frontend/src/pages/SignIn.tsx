@@ -12,6 +12,7 @@ import { BACKEND_URL } from "../utils/config";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { Loader } from "../components/Loader";
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export const SignIn = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [errorMssg, setErrorMssg] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export const SignIn = () => {
       let password = passwordRef.current?.value;
       console.log(email, password);
 
+      setIsLoading(true);
       if (emailRef && emailRef.current) emailRef.current.value = "";
 
       if (passwordRef && passwordRef.current) passwordRef.current.value = "";
@@ -45,6 +48,7 @@ export const SignIn = () => {
 
       if (!success) {
         setErrorMssg(error.issues[0].message);
+        setIsLoading(false);
         return;
       }
 
@@ -65,6 +69,9 @@ export const SignIn = () => {
     } catch (error: any) {
       // console.log(error.response.data.message);
       setErrorMssg(error.response.data.message);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -76,8 +83,8 @@ export const SignIn = () => {
       <div className="flex">
         <Header height={300} width={300} isOpaque={false} />
       </div>
-      <div className="flex  flex-col justify-center w-8/12">
-        <div className="bg-black bg-opacity-65 h-4/6 w-4/12 rounded-lg flex flex-col px-2 justify-center">
+      <div className="flex  flex-col items-center justify-between md:w-8/12 w-full md:items-start md:justify-center ">
+        <div className="bg-black bg-opacity-65 md:h-4/6 h-1/2 md:w-4/12 w-full rounded-lg flex flex-col px-2 justify-center mr-28 mt-28 md:-mr-10 md:-mt-20">
           <Heading text="Sign In" textColor="text-white" />
           <form onSubmit={handleFormSubmit}>
             <InputBox
@@ -91,7 +98,13 @@ export const SignIn = () => {
               bgColor="bg-gray-600"
               reference={passwordRef}
             />
-            <Button text="Sign In" type="submit" />
+            {loading ? (
+              <div className=" flex justify-center items-center py-4">
+                <Loader />
+              </div>
+            ) : (
+              <Button text="Sign In" type="submit" textColor="text-white" />
+            )}
           </form>
           {errorMssg && <ErrorMssg mssg={errorMssg} />}
           <Bottomlink
