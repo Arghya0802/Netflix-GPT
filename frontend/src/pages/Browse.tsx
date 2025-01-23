@@ -70,12 +70,12 @@ export const Browse = () => {
 
   return (
     <div className="min-h-screen w-full">
-      <div className="flex items-center md:h-16 md:justify-between w-full absolute z-30 top-0 pb-2 md:py-2">
-        <div className="-mt-2 md:mt-0 w-1/3 md:w-fit">
+      <div className="flex items-center  md:h-20 md:justify-between w-full absolute z-30 top-0  md:py-2">
+        <div className="w-1/3 md:w-fit -mt-2 md:mt-2">
           <Header height={400} width={400} isOpaque={!shouldShowGPT} />
         </div>
 
-        <div className="md:px-2 flex md:gap-4 items-center gap-2 justify-center w-2/3 md:w-fit ml-2 md:-ml-2">
+        <div className="md:px-2 flex md:gap-4 items-center gap-2 justify-center md:w-fit ml-2 w-full">
           <LanguageDropDown
             onChange={(e) => {
               dispatch(changeUserLanguage(e.target.value));

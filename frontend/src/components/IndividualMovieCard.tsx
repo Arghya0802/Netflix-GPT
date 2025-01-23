@@ -13,7 +13,7 @@ export const IndivdualMovieCard = ({
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center flex-col rounded-lg">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center flex-col rounded-lg min-h-screen">
       {/* <div className="flex justify-end w-72 text-3xl cursor-pointer">
         <h1>❌</h1>
       </div> */}
@@ -23,7 +23,7 @@ export const IndivdualMovieCard = ({
       <img
         src={`${IMG_CDN_URL}/${posterPath}`}
         alt={title}
-        className="md:w-auto md:h-screen  w-3/4 h-3/5 rounded-lg mb-60 md:mb-1"
+        className="md:w-auto md:h-screen h-auto w-11/12 rounded-lg md:mb-1"
         onLoad={() => setIsLoading(false)}
       />
       <button
