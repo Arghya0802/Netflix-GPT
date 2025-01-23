@@ -4,9 +4,7 @@ import { SignInFormSchema, SignUpFormSchema } from "./UserZodSchema";
 import prisma from "./lib/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
-import { API_KEY_TOKEN, JWT_SECRET, OPENAI_API_KEY } from "./config";
 import { z } from "zod";
-import axios from "axios";
 import OpenAI from "openai";
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
@@ -183,52 +181,52 @@ export const getRecommendedMovies = async (req: Request, res: Response, next: Ne
     }
 }
 
-export const getSingleMovie = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const zodObj = z.object({
-            movieName: z.string()
-        })
+// export const getSingleMovie = async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         const zodObj = z.object({
+//             movieName: z.string()
+//         })
 
 
-        const { success, error } = zodObj.safeParse(req.body);
+//         const { success, error } = zodObj.safeParse(req.body);
 
-        if (!success) {
-            next(new ApiError(411, error.issues[0].message))
-            return;
-        }
+//         if (!success) {
+//             next(new ApiError(411, error.issues[0].message))
+//             return;
+//         }
 
-        const { movieName } = req.body;
-        const words = movieName.split(" ");
-        let finalQuery = "";
+//         const { movieName } = req.body;
+//         const words = movieName.split(" ");
+//         let finalQuery = "";
 
-        words.map((word: string, index: number) => {
-            finalQuery += word;
+//         words.map((word: string, index: number) => {
+//             finalQuery += word;
 
-            if (index < word.length - 1) finalQuery += "%20";
-        })
+//             if (index < word.length - 1) finalQuery += "%20";
+//         })
 
-        const movieDetails = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${finalQuery}`, {
-            headers: {
-                Authorization: process.env.API_KEY_TOKEN
-            }
-        })
+//         const movieDetails = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${finalQuery}`, {
+//             headers: {
+//                 Authorization: process.env.API_KEY_TOKEN
+//             }
+//         })
 
-        if (!movieDetails) {
-            next(new ApiError(403, "TMDB API not working on JIO"));
-            return;
-        }
+//         if (!movieDetails) {
+//             next(new ApiError(403, "TMDB API not working on JIO"));
+//             return;
+//         }
 
-        res.status(200).json({
-            movieDetails,
-            message: "Movie details fetched successfully!",
-            success: true
-        })
-        return
-    } catch (error) {
-        next(new ApiError());
-        return;
-    }
-}
+//         res.status(200).json({
+//             movieDetails,
+//             message: "Movie details fetched successfully!",
+//             success: true
+//         })
+//         return
+//     } catch (error) {
+//         next(new ApiError());
+//         return;
+//     }
+// }
 
 interface movieProps {
     id: number,

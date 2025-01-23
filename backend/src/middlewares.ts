@@ -27,7 +27,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
             return;
         }
 
-        const decodedToken = jwt.verify(token, JWT_SECRET) as JwTPayload;
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as JwTPayload;
 
         if (!decodedToken) {
             next(new ApiError(403, "Invalid Request"));
