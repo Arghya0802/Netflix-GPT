@@ -24,7 +24,7 @@ export const MovieList = ({
   const showGpt = useSelector((state: any) => state.GPT.showGpt);
 
   return (
-    <div className="flex flex-col w-full px-3  mt-10">
+    <div className="flex flex-col w-full px-3  mt-8 md:mt-10">
       <div className="text-3xl text-white p-3 font-bold ">
         {title ? title : ""}
       </div>
