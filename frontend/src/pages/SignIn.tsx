@@ -106,7 +106,7 @@ export const SignIn = () => {
           {errorMssg && <ErrorMssg mssg={errorMssg} />}
           <Bottomlink
             text="New to Netflix?"
-            linkTo="/sign-up"
+            linkTo="sign-up"
             linkText="Sign Up"
             textColor="text-white"
           />

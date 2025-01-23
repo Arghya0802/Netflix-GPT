@@ -106,7 +106,7 @@ export const SignUp = () => {
 
           <Bottomlink
             text="Already have an account?"
-            linkTo="/sign-in"
+            linkTo="sign-in"
             linkText="Sign In"
             textColor="text-white"
           />
