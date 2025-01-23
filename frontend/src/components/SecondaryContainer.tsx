@@ -28,7 +28,7 @@ export const SecondaryContainer = () => {
           onClick={() => setSelectedMovie(null)}
         />
       )}
-      <div className="md:-mt-52 mt-32 min-h-full mb-6 md:mb-4">
+      <div className="md:-mt-52 mt-32 mb-4 min-h-full md:mb-4">
         <MovieList
           title="Now Playing Movies"
           movies={nowPlayingMovies}

@@ -69,9 +69,9 @@ export const Browse = () => {
   const shouldShowGPT = useSelector((state: any) => state.GPT.showGpt);
 
   return (
-    <div className="min-h-screen w-full">
-      <div className="flex items-center flex-col md:flex-row md:h-20 md:justify-between w-full absolute z-30 top-0  md:py-2">
-        <div className="w-full md:w-fit -mt-2 md:mt-2 flex justify-center">
+    <div className="h-screen w-full bg-black">
+      <div className="flex items-center flex-col md:flex-row md:h-20 md:justify-between  absolute z-30 top-0  md:py-2 md:w-full">
+        <div className="w-full md:w-fit  md:mt-2 flex justify-center">
           <Header height={1000} width={1000} isOpaque={!shouldShowGPT} />
         </div>
 
@@ -133,7 +133,7 @@ export const Browse = () => {
           <Loader />
         </div>
       ) : (
-        <div className="bg-gray-300 min-w-full">
+        <div className="min-w-full">
           <MainContainer movies={movies} />
           <SecondaryContainer />
         </div>
