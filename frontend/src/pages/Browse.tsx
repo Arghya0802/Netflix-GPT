@@ -69,7 +69,7 @@ export const Browse = () => {
   const shouldShowGPT = useSelector((state: any) => state.GPT.showGpt);
 
   return (
-    <div className="w-full bg-black">
+    <div className="w-screen h-screen">
       <div className="flex items-center flex-col md:flex-row md:h-20 md:justify-between  absolute z-30 top-0  md:py-2 md:w-full  w-11/12">
         <div className="md:w-fit  md:mt-2 flex justify-center w-full ml-8 md:-ml-8">
           <Header height={1000} width={1000} isOpaque={!shouldShowGPT} />
