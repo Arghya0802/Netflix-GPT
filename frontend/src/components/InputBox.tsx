@@ -13,7 +13,6 @@ export const InputBox = ({
   type = "text",
   bgColor,
   reference,
-  textColor,
 }: InputBoxProps) => {
   return (
     <div>
