@@ -4,12 +4,16 @@ import { Button } from "./Button";
 import { InputBox } from "./InputBox";
 import { useRef, useState } from "react";
 import axios from "axios";
-import { API_KEY_TOKEN, BACKEND_URL } from "../utils/config";
+// import { API_KEY_TOKEN, BACKEND_URL } from "../utils/config";
 import { ErrorMssg } from "./ErrorMssg";
 import { addGptRecommendedMovies } from "../utils/GptSlice";
 import { Loader } from "./Loader";
 
 export const GptSearchBar = () => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const API_KEY_TOKEN = import.meta.env.VITE_API_KEY_TOKEN;
+  // console.log(BACKEND_URL);
+
   const userLanguage = useSelector((state: any) => state.GPT.userLanguage);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
@@ -49,7 +53,10 @@ export const GptSearchBar = () => {
           }
         );
 
+        // console.log(promisedArray);
+
         const tmdbResults = await Promise.all(promisedArray);
+        // console.log(tmdbResults);
 
         let singleMovieCollection = tmdbResults.map((movie) => {
           return movie.results[0];

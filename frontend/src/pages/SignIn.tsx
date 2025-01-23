@@ -8,7 +8,7 @@ import { BG_URL } from "../utils/constants";
 import { SignInFormSchema } from "../utils/InputZodSchema";
 import { ErrorMssg } from "../components/ErrorMssg";
 import axios from "axios";
-import { BACKEND_URL } from "../utils/config";
+// import { BACKEND_URL } from "../utils/config";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -22,6 +22,7 @@ export const SignIn = () => {
   const [errorMssg, setErrorMssg] = useState("");
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");

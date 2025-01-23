@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../utils/config";
+// import { BACKEND_URL } from "../utils/config";
 import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
@@ -20,6 +20,8 @@ export function useGetTopRatedMovies() {
       //     },
       //   }
       // );
+
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
       const res = await axios.get(
         `${BACKEND_URL}/api/v1/user/movie/filter?categoryName=top`,

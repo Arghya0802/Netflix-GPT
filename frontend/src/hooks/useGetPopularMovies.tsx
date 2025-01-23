@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../utils/config";
+// import { BACKEND_URL } from "../utils/config";
 import { useDispatch, useSelector } from "react-redux";
 import { addPopularMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 export function useGetPopularMovies() {
   const dispatch = useDispatch();
   const popularMovies = useSelector((state: any) => state.movies.popularMovies);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   async function getPopularMovies() {
     try {

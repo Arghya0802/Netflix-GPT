@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_KEY_TOKEN } from "../utils/config";
+// import { API_KEY_TOKEN } from "../utils/config";
 import { addMainMovieTrailerId } from "../utils/movieSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -23,6 +23,7 @@ interface movieProps {
 
 export const useGetMovieTrailer = ({ mainMovie, setLoadingState }: { mainMovie: movieProps, setLoadingState: (val: boolean) => void }) => {
 
+    const API_KEY_TOKEN = import.meta.env.VITE_API_KEY_TOKEN;
     const dispatch = useDispatch();
     const primaryMovieId = useSelector((state: any) => state.movies.primaryTrailerId);
 
