@@ -72,7 +72,7 @@ export const GptSearchBar = () => {
     }
   }
   return (
-    <form action="" onSubmit={handleFormSubmit} className="mt-32 md:-mt-5">
+    <form action="" onSubmit={handleFormSubmit} className="mt-36 md:-mt-5">
       <InputBox
         placeholder={
           userLanguage === "english"

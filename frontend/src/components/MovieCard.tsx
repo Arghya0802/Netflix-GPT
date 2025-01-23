@@ -15,7 +15,7 @@ export const MovieCard = ({
   const showGpt = useSelector((state: any) => state.GPT.showGpt);
 
   return (
-    <div className="flex w-48 h-fit flex-shrink-0 cursor-pointer">
+    <div className="flex w-48 h-fit flex-shrink-0 cursor-pointer pr-3">
       <img
         src={`${showGpt ? `${IMG_CDN_URL}/${posterPath}` : `${posterPath}`}`}
         alt={title}
