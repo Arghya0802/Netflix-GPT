@@ -2,8 +2,10 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import { errorMiddleware, notFoundMiddleware } from "./middlewares";
+import dotenv from "dotenv";
 
 const app = express();
+dotenv.config();
 
 app.use(express.json());
 app.use(cors())

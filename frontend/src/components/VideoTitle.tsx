@@ -15,7 +15,7 @@ export function VideoTitle({ title, overview }: VideoTitleProps) {
       <h1 className="text-2xl md:text-6xl font-bold">{title}</h1>
       <p className=" hidden md:inline-block py-6 text-lg w-1/4">{overview}</p>
       <div className="my-4 md:m-0 absolute w-1/2 flex gap-2">
-        <div className="w-1/3">
+        <div className="w-1/3 text-xl font-bold">
           <Button
             text="Play ▶"
             bgColor="bg-red-600"

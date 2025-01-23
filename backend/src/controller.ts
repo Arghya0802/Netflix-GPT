@@ -83,7 +83,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
             return;
         }
 
-        const token = jwt.sign({ id: checkUser.id }, JWT_SECRET);
+        const token = jwt.sign({ id: checkUser.id }, process.env.JWT_SECRET as string);
 
         res.cookie("token", token, {
             httpOnly: true,
@@ -146,7 +146,7 @@ export const getRecommendedMovies = async (req: Request, res: Response, next: Ne
         }
 
         const openAI = new OpenAI({
-            apiKey: OPENAI_API_KEY, // This is the default and can be omitted
+            apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
         });
         const gptQuery = "Act as a movie recommendation system and suggest some movies for the query " + req.body.searchText + "only give me top 10 names that are comma seperated like the example ahead. Example: Don, Sholay, Phir Hera Feri, Kahani, Aajkal...";
 
@@ -209,7 +209,7 @@ export const getSingleMovie = async (req: Request, res: Response, next: NextFunc
 
         const movieDetails = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${finalQuery}`, {
             headers: {
-                Authorization: API_KEY_TOKEN
+                Authorization: process.env.API_KEY_TOKEN
             }
         })
 

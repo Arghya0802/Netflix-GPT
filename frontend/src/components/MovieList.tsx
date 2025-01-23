@@ -24,11 +24,11 @@ export const MovieList = ({
   const showGpt = useSelector((state: any) => state.GPT.showGpt);
 
   return (
-    <div className="flex flex-col w-full px-3 h-full mt-10">
+    <div className="flex flex-col w-full px-3  mt-10">
       <div className="text-3xl text-white p-3 font-bold ">
         {title ? title : ""}
       </div>
-      <div className="flex gap-2 px-3 overflow-x-auto scrollbar-hide w-full">
+      <div className="flex gap-2 px-3 overflow-x-auto scrollbar-hide">
         {movies.map((movie) => (
           <MovieCard
             posterPath={showGpt ? movie?.poster_path : movie?.posterPath}
