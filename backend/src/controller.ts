@@ -4,9 +4,10 @@ import { SignInFormSchema, SignUpFormSchema } from "./UserZodSchema";
 import prisma from "./lib/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
-import { API_KEY_TOKEN, JWT_SECRET, openAI } from "./config";
+import { API_KEY_TOKEN, JWT_SECRET, OPENAI_API_KEY } from "./config";
 import { z } from "zod";
 import axios from "axios";
+import OpenAI from "openai";
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -144,6 +145,9 @@ export const getRecommendedMovies = async (req: Request, res: Response, next: Ne
             return;
         }
 
+        const openAI = new OpenAI({
+            apiKey: OPENAI_API_KEY, // This is the default and can be omitted
+        });
         const gptQuery = "Act as a movie recommendation system and suggest some movies for the query " + req.body.searchText + "only give me top 10 names that are comma seperated like the example ahead. Example: Don, Sholay, Phir Hera Feri, Kahani, Aajkal...";
 
         const results = await openAI.chat.completions.create({
