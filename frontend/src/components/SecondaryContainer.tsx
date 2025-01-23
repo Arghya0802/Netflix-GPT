@@ -20,7 +20,7 @@ export const SecondaryContainer = () => {
     (state: any) => state.movies.upcomingMovies
   );
   return (
-    <div className="flex flex-col scrollbar-hide bg-black h-full">
+    <div className="flex flex-col scrollbar-hide bg-black min-h-screen">
       {selectedMovie && (
         <IndivdualMovieCard
           title={selectedMovie.title}
