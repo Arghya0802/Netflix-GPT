@@ -6,9 +6,7 @@ export const Dummy = () => {
       <IndivdualMovieCard
         posterPath="k9tv1rXZbOhH7eiCk378x61kNQ1.jpg"
         title="Grave of Fireflies"
-        onClick={() => {
-          console.log("This is a dummy page");
-        }}
+        onClick={() => {}}
       />
     </div>
   );

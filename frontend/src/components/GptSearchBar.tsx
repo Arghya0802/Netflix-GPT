@@ -14,6 +14,7 @@ export const GptSearchBar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleFormSubmit(e: React.FormEvent) {
     try {
@@ -33,9 +34,6 @@ export const GptSearchBar = () => {
             },
           }
         );
-
-        // console.log(res.data.recommendedMovies);
-        // inputRef.current.value = "";
         const promisedArray = res.data.recommendedMovies.map(
           async (movie: string) => {
             const res = await axios.get(
@@ -51,22 +49,16 @@ export const GptSearchBar = () => {
           }
         );
 
-        console.log(promisedArray);
-
         const tmdbResults = await Promise.all(promisedArray);
 
-        console.log(tmdbResults);
         let singleMovieCollection = tmdbResults.map((movie) => {
           return movie.results[0];
         });
 
-        console.log(singleMovieCollection);
-
         dispatch(addGptRecommendedMovies(singleMovieCollection));
       }
     } catch (error: any) {
-      console.log(error);
-      <ErrorMssg mssg={error.response.data.message} />;
+      setError("Oops! Looks like we are down! Please comeback later!");
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -90,18 +82,21 @@ export const GptSearchBar = () => {
           <Loader />
         </div>
       ) : (
-        <Button
-          text={
-            userLanguage === "english"
-              ? language.english.search
-              : userLanguage === "hindi"
-              ? language.hindi.search
-              : language.spanish.search
-          }
-          bgColor="bg-red-500"
-          textColor="text-white"
-          type="submit"
-        />
+        <div>
+          <Button
+            text={
+              userLanguage === "english"
+                ? language.english.search
+                : userLanguage === "hindi"
+                ? language.hindi.search
+                : language.spanish.search
+            }
+            bgColor="bg-red-500"
+            textColor="text-white"
+            type="submit"
+          />
+          {error && <ErrorMssg mssg={error} />}
+        </div>
       )}
     </form>
   );

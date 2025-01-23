@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_KEY_TOKEN, BACKEND_URL } from "../utils/config";
+import { BACKEND_URL } from "../utils/config";
 import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovies } from "../utils/movieSlice";
 import { useEffect } from "react";
@@ -31,9 +31,7 @@ export function useGetTopRatedMovies() {
       );
 
       dispatch(addTopRatedMovies(res.data.filteredMovies));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   useEffect(() => {

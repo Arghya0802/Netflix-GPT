@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
-import { MovieCard } from "./MovieCard";
 import { MovieList } from "./MovieList";
 import { useState } from "react";
 import { IndivdualMovieCard } from "./IndividualMovieCard";
 import { IMG_CDN_URL } from "../utils/config";
-import { ErrorMssg } from "./ErrorMssg";
 interface movieProps {
   adult: boolean;
   poster_path: string;
@@ -23,14 +21,11 @@ interface movieProps {
 }
 
 export const GptRecommendedMovies = () => {
-  const [errorMssg, setErrorMssg] = useState("");
-
   const movies = useSelector(
     (state: any) => state.GPT.gptMovies
   ) as movieProps[];
 
   const [selectedMovie, setSelectedMovie] = useState<any>(null);
-  console.log(movies);
 
   if (movies.length == 0) return;
   return (
@@ -49,7 +44,6 @@ export const GptRecommendedMovies = () => {
           movieClick={(movie) => setSelectedMovie(movie)}
         />
       )}
-      {errorMssg && <ErrorMssg mssg={errorMssg} />}
     </div>
   );
 };

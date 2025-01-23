@@ -21,12 +21,14 @@ interface movieProps {
     vote_count: number;
 }
 
-export const useGetMovieTrailer = ({ mainMovie }: { mainMovie: movieProps }) => {
+export const useGetMovieTrailer = ({ mainMovie, setLoadingState }: { mainMovie: movieProps, setLoadingState: (val: boolean) => void }) => {
+
     const dispatch = useDispatch();
     const primaryMovieId = useSelector((state: any) => state.movies.primaryTrailerId);
 
     async function getMovieTrailers() {
         try {
+            setLoadingState(true);
             const res = await axios.get(
                 `https://api.themoviedb.org/3/movie/${mainMovie.id}/videos?language=en-US`,
                 {
@@ -36,22 +38,21 @@ export const useGetMovieTrailer = ({ mainMovie }: { mainMovie: movieProps }) => 
                 }
             );
 
-            console.log(res.data);
 
             const trailers = res.data.results.filter(
                 (item: any) => item.type.toLowerCase() === "trailer"
             );
 
-            console.log(trailers);
 
             const trailer = trailers.length ? trailers[0] : res.data.results[0];
 
             dispatch(addMainMovieTrailerId(trailer.key));
 
-            console.log(`https://www.youtube.com/watch?v=${trailer.key}`);
         } catch (error) {
-            console.log(error);
+            setLoadingState(false);
             dispatch(addMainMovieTrailerId("lMXh6vjiZrI"));
+        } finally {
+            setLoadingState(false);
         }
     }
 

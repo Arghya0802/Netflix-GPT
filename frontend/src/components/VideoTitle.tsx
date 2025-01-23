@@ -10,8 +10,6 @@ export function VideoTitle({ title, overview }: VideoTitleProps) {
     (state: any) => state.movies.primaryTrailerId
   );
 
-  console.log(primaryTrailerId);
-
   return (
     <div className=" pt-28 px-6 md:px-24 absolute left-0 top-0 text-white hidden md:block">
       <h1 className="text-2xl md:text-6xl font-bold">{title}</h1>
@@ -23,9 +21,6 @@ export function VideoTitle({ title, overview }: VideoTitleProps) {
             bgColor="bg-red-600"
             textColor="text-white"
             onClick={() => {
-              console.log("Play Button is clicked!!!");
-
-              // window.location.href = `https://www.youtube.com/watch?${primaryTrailerId}`;
               window.open(
                 `https://www.youtube.com/watch?v=${primaryTrailerId}`,
                 "_blank"
@@ -34,7 +29,6 @@ export function VideoTitle({ title, overview }: VideoTitleProps) {
             height="h-12"
           />
         </div>
-        {/* <Button text="More Info ℹ" bgColor="bg-gray-400" /> */}
       </div>
     </div>
   );

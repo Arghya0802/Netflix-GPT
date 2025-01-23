@@ -1,6 +1,7 @@
 import { VideoTitle } from "./VideoTitle";
 import { BackgroundVideo } from "./BackgroundVideo";
 import { useGetMovieTrailer } from "../hooks/useGetPrimaryMovie";
+import { useState } from "react";
 
 interface movieProps {
   adult: boolean;
@@ -20,27 +21,21 @@ interface movieProps {
 }
 
 export const MainContainer = ({ movies }: { movies: movieProps[] }) => {
+  const [loading, setLoading] = useState(false);
   // const ind = Math.floor(Math.random() * movies.length);
-  const mainMovie = movies[2];
-  console.log("From Main Container");
-  console.log(mainMovie);
-  console.log(mainMovie.id);
 
-  useGetMovieTrailer({ mainMovie });
+  const setLoadingState = (value: boolean) => setLoading(value);
+
+  const mainMovie = movies[2];
+
+  useGetMovieTrailer({ mainMovie, setLoadingState });
 
   return (
     <div className="md:pt-0">
-      <div className="">
-        <BackgroundVideo />
+      <div className="bg-black">
+        <BackgroundVideo loading={loading} />
       </div>
 
-      {/* <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        src={trailerLink}
-      /> */}
       <div className="">
         <VideoTitle
           title={"Mufasa: The Lion King"}

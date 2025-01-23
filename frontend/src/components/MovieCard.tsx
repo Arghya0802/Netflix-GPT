@@ -20,7 +20,6 @@ export const MovieCard = ({
         src={`${showGpt ? `${IMG_CDN_URL}/${posterPath}` : `${posterPath}`}`}
         alt={title}
         onClick={() => {
-          console.log("Image clicked for " + title);
           onClick();
         }}
         onLoad={() => setIsLoading(false)}

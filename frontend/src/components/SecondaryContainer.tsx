@@ -2,16 +2,9 @@ import { useSelector } from "react-redux";
 import { MovieList } from "./MovieList";
 import { useState } from "react";
 import { IndivdualMovieCard } from "./IndividualMovieCard";
-import { IMG_CDN_URL } from "../utils/config";
 
-interface movieProps {
-  title: string;
-  posterPath: string;
-}
 export const SecondaryContainer = () => {
   const [selectedMovie, setSelectedMovie] = useState<any>(null);
-
-  console.log(selectedMovie);
 
   const nowPlayingMovies = useSelector(
     (state: any) => state.movies.nowPlayingMovies

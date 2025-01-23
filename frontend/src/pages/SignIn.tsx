@@ -34,7 +34,6 @@ export const SignIn = () => {
       e.preventDefault();
       let email = emailRef.current?.value;
       let password = passwordRef.current?.value;
-      console.log(email, password);
 
       setIsLoading(true);
       if (emailRef && emailRef.current) emailRef.current.value = "";
@@ -57,8 +56,6 @@ export const SignIn = () => {
         password,
       });
 
-      // console.log(res);
-
       localStorage.setItem("token", res.data.token);
 
       const newEmail = email === undefined ? null : email;
@@ -67,7 +64,6 @@ export const SignIn = () => {
 
       navigate("/browse");
     } catch (error: any) {
-      // console.log(error.response.data.message);
       setErrorMssg(error.response.data.message);
       setIsLoading(false);
     } finally {

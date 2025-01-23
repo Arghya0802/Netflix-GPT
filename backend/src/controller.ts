@@ -41,7 +41,6 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
             }, select: { name: true, email: true }
         })
 
-        // console.log(newUser);
 
         if (!newUser) {
             next(new ApiError());
@@ -54,7 +53,6 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
             success: true
         })
     } catch (error) {
-        console.log(error);
         next(new ApiError())
     }
 }
@@ -99,7 +97,6 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
             success: true
         })
     } catch (error) {
-        console.log(error);
         next(new ApiError())
         return;
     }
@@ -121,7 +118,6 @@ export const getUserProfile = async (req: Request, res: Response, next: NextFunc
             success: true
         })
     } catch (error) {
-        console.log(error);
         next(new ApiError());
         return;
     }
@@ -161,7 +157,6 @@ export const getRecommendedMovies = async (req: Request, res: Response, next: Ne
         const newMovies = movies?.map((movie) => {
             movie.trim();
             const words = movie.split(" ");
-            console.log(words);
 
             let query = "";
 
@@ -180,7 +175,6 @@ export const getRecommendedMovies = async (req: Request, res: Response, next: Ne
         })
         return;
     } catch (error) {
-        console.log(error);
         next(new ApiError())
     }
 }
@@ -209,7 +203,6 @@ export const getSingleMovie = async (req: Request, res: Response, next: NextFunc
             if (index < word.length - 1) finalQuery += "%20";
         })
 
-        // console.log(finalQuery);
         const movieDetails = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${finalQuery}`, {
             headers: {
                 Authorization: API_KEY_TOKEN
@@ -228,7 +221,6 @@ export const getSingleMovie = async (req: Request, res: Response, next: NextFunc
         })
         return
     } catch (error) {
-        console.log(error);
         next(new ApiError());
         return;
     }
@@ -274,7 +266,6 @@ export const addMovies = async (req: Request, res: Response, next: NextFunction)
             success: true
         })
     } catch (error) {
-        console.log(error);
         next(new ApiError());
         return;
     }
@@ -292,13 +283,10 @@ export const getCollectionOfMovies = async (req: Request, res: Response, next: N
             next(new ApiError(404, "No User found"))
             return;
         }
-        // console.log(categoryName);
 
         let filteredMovies = [] as any[];
 
         const allMovies = await prisma.movie.findMany();
-
-        // console.log(allMovies);
 
         allMovies.map((movie) => {
             movie.category.map((category) => {
@@ -314,7 +302,6 @@ export const getCollectionOfMovies = async (req: Request, res: Response, next: N
             sucess: true
         })
     } catch (error) {
-        console.log(error);
         next(new ApiError());
         return;
     }

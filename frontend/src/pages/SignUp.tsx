@@ -30,8 +30,6 @@ export const SignUp = () => {
       const password = passwordRef.current?.value;
       const name = nameRef.current?.value;
 
-      console.log(email, password, name);
-
       const { success, error } = SignUpFormSchema.safeParse({
         email,
         password,
@@ -47,12 +45,11 @@ export const SignUp = () => {
         return;
       }
 
-      const res = await axios.post(`${BACKEND_URL}/api/v1/user/sign-up`, {
+      await axios.post(`${BACKEND_URL}/api/v1/user/sign-up`, {
         name,
         email,
         password,
       });
-      console.log(res);
 
       navigate("/sign-in");
     } catch (error: any) {

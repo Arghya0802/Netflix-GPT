@@ -1,5 +1,7 @@
 export const ErrorMssg = ({ mssg }: { mssg: string }) => {
   return (
-    <div className="text-center text-red-600 font-bold bg-white/0">{mssg}</div>
+    <div className="text-center text-white font-bold bg-opacity-100 text-xl">
+      {mssg}
+    </div>
   );
 };
