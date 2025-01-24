@@ -29,7 +29,7 @@ export const GptRecommendedMovies = () => {
 
   if (movies.length == 0) return;
   return (
-    <div className="text-white mb-10 md:-mb-10">
+    <div className="mt-64 md:mt-40 text-white mb-10 md:-mb-10 w-full">
       {selectedMovie && (
         <IndivdualMovieCard
           title={selectedMovie.title}

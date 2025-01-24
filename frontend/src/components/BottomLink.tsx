@@ -17,10 +17,12 @@ export const Bottomlink = ({
   // console.log(linkTo);
 
   return (
-    <div className={`flex items-center justify-center py-2 ${textColor}`}>
-      <h1 className="">{text}</h1>
+    <div
+      className={`flex items-center py-2 ${textColor} w-full  justify-center`}
+    >
+      <h1 className="text-sm md:text-base">{text}</h1>
       <button
-        className="pl-2 underline"
+        className=" pl-2 text-wrap underline"
         onClick={() =>
           linkTo === "sign-up" ? navigate("/sign-up") : navigate("/sign-in")
         }
